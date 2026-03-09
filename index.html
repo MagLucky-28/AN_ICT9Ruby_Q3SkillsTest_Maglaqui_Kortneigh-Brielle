@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Q3 Skills Test</title>
+
+  <!-- Bootstrap CDN -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+
+  <style>
+    /* Internal CSS for the page design */
+    body {
+      font-family: Arial, sans-serif;
+      background: linear-gradient(135deg, #fef6e4, #dff6ff);
+      min-height: 100vh;
+    }
+
+    .main-box {
+      max-width: 950px;
+      margin: 40px auto;
+      background: white;
+      border-radius: 18px;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.12);
+      overflow: hidden;
+    }
+
+    .left-side {
+      background: #ffe5ec;
+      padding: 30px;
+      height: 100%;
+    }
+
+    .right-side {
+      padding: 30px;
+      background: #ffffff;
+    }
+
+    .page-title {
+      color: #6a4c93;
+      font-weight: bold;
+    }
+
+    .section-title {
+      color: #1982c4;
+      font-size: 1.1rem;
+      margin-top: 15px;
+    }
+
+    .student-card {
+      border: 2px dashed #8ac926;
+      border-radius: 15px;
+      padding: 18px;
+      background: #f7fff0;
+      text-align: center;
+    }
+
+    .student-image {
+      width: 140px;
+      height: 140px;
+      object-fit: cover;
+      border-radius: 50%;
+      border: 4px solid #ffca3a;
+      margin-bottom: 10px;
+    }
+
+    .btn-custom {
+      background: #6a4c93;
+      color: white;
+      border: none;
+    }
+
+    .btn-custom:hover {
+      background: #533a77;
+      color: white;
+    }
+
+    .output-box {
+      margin-top: 18px;
+      padding: 12px;
+      border-radius: 10px;
+      background: #f1f8ff;
+      border-left: 5px solid #1982c4;
+      min-height: 55px;
+    }
+
+    .footer-note {
+      text-align: center;
+      padding: 12px;
+      background: #6a4c93;
+      color: white;
+      font-size: 0.95rem;
+    }
+
+    .small-note {
+      font-size: 0.9rem;
+      color: #555;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <div class="main-box">
+      <div class="row g-0">
+
+        <!-- Left side info area -->
+        <div class="col-md-4 left-side">
+          <div class="student-card mt-2">
+            <img id="previewImage" class="student-image" src="https://via.placeholder.com/140x140.png?text=Student" alt="Student Preview">
+            <input type="file" class="form-control mt-2" id="photoInput" accept="image/*">
+            <button class="btn btn-warning mt-3 w-100" onclick="uploadPhoto()">Upload Photo</button>
+          </div>
+
+          
+        </div>
+
+        <!-- Right side form area -->
+        <div class="col-md-8 right-side">
+          <h2 class="page-title">Student Registration</h2>
+          <p class="small-note">Please fill out the form below.</p>
+
+          <div class="row">
+            <div class="col-md-6 mb-3">
+              <label class="form-label">First Name</label>
+              <input type="text" class="form-control" id="firstName" placeholder="Enter first name">
+            </div>
+            <div class="col-md-6 mb-3">
+              <label class="form-label">Last Name</label>
+              <input type="text" class="form-control" id="lastName" placeholder="Enter last name">
+            </div>
+
+            <div class="col-md-4 mb-3">
+              <label class="form-label">Age</label>
+              <input type="number" class="form-control" id="age" placeholder="Age">
+            </div>
+            <div class="col-md-8 mb-3">
+              <label class="form-label">Section</label>
+              <input type="text" class="form-control" id="section" placeholder="ex. ICT 9 - Ruby">
+            </div>
+
+            <div class="col-md-12 mb-3">
+              <label class="form-label">Email</label>
+              <input type="email" class="form-control" id="email" placeholder="Enter email">
+            </div>
+
+            <div class="col-md-12 mb-3">
+              <label class="form-label">Username</label>
+              <input type="text" class="form-control" id="username" placeholder="Create username">
+            </div>
+
+            <div class="col-md-12 mb-3">
+              <label class="form-label">Password</label>
+              <input type="password" class="form-control" id="password" placeholder="Create password">
+            </div>
+          </div>
+
+          <div class="form-check mb-3">
+            <input class="form-check-input" type="checkbox" id="agreeCheck">
+            <label class="form-check-label" for="agreeCheck">
+              I agree to the school registration rules.
+            </label>
+          </div>
+
+          <div class="d-flex flex-wrap gap-2">
+            <button class="btn btn-custom" onclick="createAccount()">Create Account</button>
+            <button class="btn btn-success" onclick="showStudentInfo()">Show Info</button>
+            <button class="btn btn-secondary" onclick="clearForm()">Clear Form</button>
+          </div>
+
+          <div class="output-box" id="outputBox">
+            Output will appear here.
+          </div>
+
+          
+        </div>
+      </div>
+
+      <div class="footer-note">
+        Brielle Maglaqui | Grade &amp; Section &copy; 2026
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // this function is for uploading and previewing the picture
+    function uploadPhoto() {
+      var fileInput = document.getElementById("photoInput");
+      var previewImage = document.getElementById("previewImage");
+
+      if (fileInput.files.length > 0) {
+        var reader = new FileReader();
+
+        reader.onload = function(e) {
+          previewImage.src = e.target.result;
+          alert("Your profile picture was uploaded.");
+        };
+
+        reader.readAsDataURL(fileInput.files[0]);
+      } else {
+        alert("Please choose a photo first.");
+      }
+    }
+
+    // this function checks the form and makes an output message
+    function createAccount() {
+      var firstName = document.getElementById("firstName").value;
+      var lastName = document.getElementById("lastName").value;
+      var age = document.getElementById("age").value;
+      var section = document.getElementById("section").value;
+      var username = document.getElementById("username").value;
+      var agree = document.getElementById("agreeCheck").checked;
+      var output = document.getElementById("outputBox");
+
+      // checking if important fields are empty
+      if (firstName == "" || lastName == "" || age == "" || section == "" || username == "") {
+        output.innerHTML = "Please complete the form first.";
+      }
+      else if (age < 10 || age > 100) {
+        output.innerHTML = "Please type a valid age.";
+      }
+      else if (agree == false) {
+        output.innerHTML = "Please check the agreement box first.";
+      }
+      else {
+        output.innerHTML = "Welcome " + firstName + " " + lastName + "! Your account has been created.";
+      }
+    }
+
+    // this function shows the information typed by the user
+    function showStudentInfo() {
+      var firstName = document.getElementById("firstName").value;
+      var lastName = document.getElementById("lastName").value;
+      var age = parseInt(document.getElementById("age").value);
+      var section = document.getElementById("section").value;
+      var email = document.getElementById("email").value;
+      var output = document.getElementById("outputBox");
+
+      // example of using operator
+      var nextAge = age + 1;
+
+      output.innerHTML =
+        "Student Name: <b>" + firstName + " " + lastName + "</b><br>" +
+        "Age: " + age + "<br>" +
+        "Age Next Year: " + nextAge + "<br>" +
+        "Section: " + section + "<br>" +
+        "Email: " + email;
+    }
+
+    // this function clears the form
+    function clearForm() {
+      document.getElementById("firstName").value = "";
+      document.getElementById("lastName").value = "";
+      document.getElementById("age").value = "";
+      document.getElementById("section").value = "";
+      document.getElementById("email").value = "";
+      document.getElementById("username").value = "";
+      document.getElementById("password").value = "";
+      document.getElementById("agreeCheck").checked = false;
+      document.getElementById("outputBox").innerHTML = "Form cleared.";
+      document.getElementById("previewImage").src = "https://via.placeholder.com/140x140.png?text=Student";
+    }
+  </script>
+
+</body>
+</html>
